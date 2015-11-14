@@ -5,7 +5,7 @@
 ## Install
 
 ```
-$ go get github.com/yoppi/go-chatwork
+$ go get github.com/eiel/go-chatwork
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ $ go get github.com/yoppi/go-chatwork
 package main
 
 import (
-  chatwork "github.com/griffin-stewie/go-chatwork"
+  chatwork "github.com/eiel/go-chatwork"
 )
 
 func main() {
@@ -31,6 +31,15 @@ func main() {
 
   ...
 }
+```
+
+### for GoogleAppEngine/Go
+
+```go
+c := appengine.NewContext(r)
+client := urlfetch.Client(c)
+chatwork := chatwork.NewClient(`api-key`)
+chatwork.HttpClient = client
 ```
 
 See more examples in `examples` directory.

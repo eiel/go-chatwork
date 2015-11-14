@@ -22,6 +22,7 @@ type Client struct {
 	APIKey  string
 	BaseURL string
 	HTTP
+	HttpClient *http.Client
 }
 
 // NewClient returns ChatWork HTTP Client
@@ -76,7 +77,9 @@ func (c *Client) parseBody(resp *http.Response) []byte {
 }
 
 func (c *Client) execute(method, endpoint string, params map[string]string) []byte {
-	httpClient := &http.Client{}
+	if c.HttpClient == nil {
+		c.HttpClient = &http.Client{}
+	}
 
 	var (
 		req        *http.Request
@@ -95,7 +98,7 @@ func (c *Client) execute(method, endpoint string, params map[string]string) []by
 
 	req.Header.Add("X-ChatWorkToken", c.APIKey)
 
-	resp, err := httpClient.Do(req)
+	resp, err := c.HttpClient.Do(req)
 	if err != nil {
 		log.Println(err)
 		return []byte(``)
